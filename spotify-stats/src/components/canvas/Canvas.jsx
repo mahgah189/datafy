@@ -6,22 +6,22 @@ function Canvas(props) {
   const [canvas, setCanvas] = React.useState("");
 
   let canvasToken = props.canvasToken;
-  let trackId = props.trackId;
+  let trackArray = props.trackArray;
 
   React.useEffect(() => {
     const runCanvasRequest = async() => {
       try {
-        const canvasResponse = await getCanvas(trackId, canvasToken.accessToken);
+        const canvasResponse = await getCanvas(trackArray, canvasToken.accessToken);
         updateCanvas(canvasResponse.canvasesList[0].canvasUrl);
       } catch(error) {
         console.log(error);
       }
     };
 
-    trackId && runCanvasRequest();
+    trackArray && runCanvasRequest();
   }, [trackId]);
 
-  const updateCanvas = (canvasUrl) => {
+  const updateCanvas = canvasUrl => {
     setCanvas(prevCanvas => {
       return {
         canvasUrl: canvasUrl
